@@ -265,7 +265,7 @@ input,select{font-size:16px;}
 .range-input{width:100%;background:var(--b1);border:2px solid rgba(0,245,255,0.25);border-radius:12px;color:var(--tm);padding:14px 16px;font-family:'Orbitron',monospace;font-size:1rem;letter-spacing:0.05em;text-align:center;transition:border-color 0.2s;}
 .range-input:focus{outline:none;border-color:var(--nc);box-shadow:0 0 20px rgba(0,245,255,0.15);}
 .range-input::placeholder{color:var(--td);font-size:0.75rem;letter-spacing:0.02em;}
-.range-presets{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:14px;}
+.range-presets{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:14px;max-height:180px;overflow-y:auto;padding-right:2px;}
 .range-preset{background:var(--b1);border:1px solid rgba(0,245,255,0.12);border-radius:8px;color:var(--td);padding:8px 4px;font-size:0.65rem;font-family:'Noto Sans JP',sans-serif;font-weight:700;cursor:pointer;transition:all 0.18s;text-align:center;line-height:1.3;}
 @media(hover:hover){.range-preset:hover{border-color:rgba(0,245,255,0.4);color:var(--tm);background:rgba(0,245,255,0.04);}}
 .range-preset.sel{border-color:var(--nc);color:var(--nc);background:rgba(0,245,255,0.08);box-shadow:0 0 8px rgba(0,245,255,0.12);}
@@ -285,6 +285,11 @@ input,select{font-size:16px;}
 @keyframes tagIn{from{opacity:0;transform:scale(0.8);}to{opacity:1;transform:scale(1);}}
 .range-tag-x{cursor:pointer;color:var(--np);font-size:0.8rem;margin-left:2px;opacity:0.7;transition:opacity 0.15s;}
 .range-tag-x:hover{opacity:1;}
+
+.tq[onclick]{cursor:pointer;transition:text-shadow 0.15s;}
+.tq[onclick]:active{text-shadow:0 0 30px var(--nc),0 0 60px var(--nc);}
+.flash-word[onclick]{transition:text-shadow 0.15s;}
+.flash-word[onclick]:active{text-shadow:0 0 30px currentColor,0 0 60px currentColor;}
 </style>
 </head>
 <body>
@@ -428,7 +433,7 @@ input,select{font-size:16px;}
       </div>
     </div>
     <div class="qcard-mid">
-      <div style="display:flex;align-items:center;justify-content:center;gap:10px;"><div class="tq" id="tQ">—</div><button class="flash-speak-btn" id="timerSpeakBtn" onclick="speakTimerWord()" style="width:36px;height:36px;font-size:1rem;flex-shrink:0;">🔊</button></div>
+      <div class="tq" id="tQ" style="cursor:pointer;" onclick="speakTimerWord()">—</div>
       <div class="tans" id="tAns"></div>
     </div>
     <div class="qcard-bot">
@@ -490,16 +495,26 @@ input,select{font-size:16px;}
       <button class="range-preset" onclick="rangePreset(1,100)">1-100</button>
       <button class="range-preset" onclick="rangePreset(101,200)">101-200</button>
       <button class="range-preset" onclick="rangePreset(201,300)">201-300</button>
-      <button class="range-preset" onclick="rangePreset(301,500)">301-500</button>
-      <button class="range-preset" onclick="rangePreset(501,800)">501-800</button>
-      <button class="range-preset" onclick="rangePreset(801,1100)">801-1100</button>
-      <button class="range-preset" onclick="rangePreset(1101,1400)">1101-1400</button>
-      <button class="range-preset" onclick="rangePreset(1401,1700)">1401-1700</button>
-      <button class="range-preset" onclick="rangePreset(1701,1900)">1701-1900</button>
+      <button class="range-preset" onclick="rangePreset(301,400)">301-400</button>
+      <button class="range-preset" onclick="rangePreset(401,500)">401-500</button>
+      <button class="range-preset" onclick="rangePreset(501,600)">501-600</button>
+      <button class="range-preset" onclick="rangePreset(601,700)">601-700</button>
+      <button class="range-preset" onclick="rangePreset(701,800)">701-800</button>
+      <button class="range-preset" onclick="rangePreset(801,900)">801-900</button>
+      <button class="range-preset" onclick="rangePreset(901,1000)">901-1000</button>
+      <button class="range-preset" onclick="rangePreset(1001,1100)">1001-1100</button>
+      <button class="range-preset" onclick="rangePreset(1101,1200)">1101-1200</button>
+      <button class="range-preset" onclick="rangePreset(1201,1300)">1201-1300</button>
+      <button class="range-preset" onclick="rangePreset(1301,1400)">1301-1400</button>
+      <button class="range-preset" onclick="rangePreset(1401,1500)">1401-1500</button>
+      <button class="range-preset" onclick="rangePreset(1501,1600)">1501-1600</button>
+      <button class="range-preset" onclick="rangePreset(1601,1700)">1601-1700</button>
+      <button class="range-preset" onclick="rangePreset(1701,1800)">1701-1800</button>
+      <button class="range-preset" onclick="rangePreset(1801,1900)">1801-1900</button>
     </div>
     
     <div class="range-input-wrap">
-      <input type="text" class="range-input" id="rangeInput" placeholder="例: 150-230" inputmode="text" autocomplete="off">
+      <input type="text" class="range-input" id="rangeInput" placeholder="例: 1-33, 150-230" inputmode="text" autocomplete="off">
     </div>
     <button class="range-add" onclick="addRange()">＋ この範囲を追加</button>
     
@@ -528,13 +543,11 @@ input,select{font-size:16px;}
   <div class="flash-card-area" onclick="flipFlash()">
     <div class="flash-card" id="flashCard">
       <div class="flash-face flash-front">
-        <div class="flash-word" id="flashFrontWord">word</div>
-        <button class="flash-speak-btn" id="flashSpeakBtn" onclick="event.stopPropagation();speakWord()">🔊</button>
-        <div class="flash-hint">タップでめくる</div>
+        <div class="flash-word" id="flashFrontWord" onclick="event.stopPropagation();speakFlashFront()">word</div>
+        <div class="flash-hint">タップでめくる ｜ 単語タップで発音</div>
       </div>
       <div class="flash-face flash-back">
-        <div class="flash-word jp" id="flashBackWord">意味</div>
-        <button class="flash-speak-btn" id="flashSpeakBtnBack" onclick="event.stopPropagation();speakWord()" style="display:none">🔊</button>
+        <div class="flash-word jp" id="flashBackWord" onclick="event.stopPropagation();speakFlashBack()">意味</div>
         <div class="flash-hint">タップで次へ</div>
       </div>
     </div>
@@ -1150,9 +1163,7 @@ function showTQ(){
   document.getElementById('tPhase').textContent='❓ QUESTION';
   document.getElementById('tPhase').className='tphase qp';
   document.getElementById('tQ').textContent=q.q;
-  // Show speak button only for English question words
-  const speakBtn=document.getElementById('timerSpeakBtn');
-  if(speakBtn){ speakBtn.style.display=(quizDir==='en')?'flex':'none'; }
+  // Tap on question word to hear pronunciation
   document.getElementById('tCount').textContent=(tIdx+1)+' / '+tProbs.length;
   document.getElementById('cdNum').className='cdnum qc';
   document.getElementById('progFill').className='pfill qf';
@@ -1198,7 +1209,7 @@ function showTQ(){
       document.getElementById('tPhase').textContent='💡 ANSWER';
       document.getElementById('tPhase').className='tphase ap';
       // jp→en: show speak button now that English answer is revealed
-      if(quizDir==='jp'){const sb=document.getElementById('timerSpeakBtn');if(sb)sb.style.display='flex';}
+      // jp->en: word is tappable for pronunciation after reveal
       document.getElementById('cdNum').className='cdnum ac';
       document.getElementById('progFill').className='pfill af';
       lastBeepSec=-1;
@@ -1225,7 +1236,7 @@ function timeUp(){
   onMiss();
   document.getElementById('tPhase').textContent='💡 ANSWER';
   document.getElementById('tPhase').className='tphase ap';
-  if(quizDir==='jp'){const sb=document.getElementById('timerSpeakBtn');if(sb)sb.style.display='flex';}
+  // jp->en: word is tappable for pronunciation after reveal
   document.getElementById('cdNum').className='cdnum ac';
   document.getElementById('progFill').className='pfill af';
   lastBeepSec=-1;
@@ -1614,31 +1625,20 @@ function confirmRange(){
   const filtered = getFilteredPool();
   if(filtered.length === 0){ toast('⚠ 問題データが見つかりません'); return; }
   
-  // Set up sections that cover the range (for catScreen display)
-  catMode='all-preset';
-  selIds.clear();
-  customRanges.forEach(r=>{
-    for(let sec=1;sec<=19;sec++){
-      const secStart=(sec-1)*100+1, secEnd=sec*100;
-      if(secEnd>=r.from && secStart<=r.to) selIds.add('t1900_'+sec);
-    }
-  });
-  
-  // Store custom ranges for pool filtering
   window._useCustomRange = true;
   
-  activeCatKey='t1900';
-  resetCatScreenState();
-  const label = customRanges.length === 1 
-    ? '🎯 ' + customRanges[0].from + '-' + customRanges[0].to
-    : '🎯 ' + customRanges.length + '範囲';
-  document.getElementById('catLogo').textContent = label;
-  document.getElementById('catLogoSub').textContent = countRangeWords() + ' WORDS';
-  document.getElementById('catPtitle').textContent = '▶ 範囲選択済み （' + countRangeWords() + '問）';
-  document.getElementById('tabBar').classList.add('hidden');
-  renderGrid('t1900');
-  document.getElementById('catBack').onclick=()=>{clk();window._useCustomRange=false;show('mainScreen');};
-  show('catScreen');
+  // Skip catScreen — start directly
+  if(quizType === 'flash'){
+    startFlashcard();
+  } else {
+    // For timer mode, set reasonable defaults and start
+    pool = filtered.slice();
+    if(quizDir === 'jp') pool = buildReversePool(pool);
+    window._useCustomRange = false;
+    document.getElementById('floatBack').classList.remove('hidden');
+    resetGame();
+    startTimer();
+  }
 }
 
 // Enter key support for range input
@@ -1703,6 +1703,25 @@ function speakWord(word){
 
 // Add TTS to timer quiz question display
 // TTS integrated into showTQ directly
+function speakFlashFront(){
+  if(!flashPool || flashPool.length === 0) return;
+  const item = flashPool[flashIdx];
+  if(quizDir === 'en'){
+    speakWord(item.q); // English word
+  }
+  // jp mode: front is Japanese, no pronunciation
+}
+
+function speakFlashBack(){
+  if(!flashPool || flashPool.length === 0) return;
+  const item = flashPool[flashIdx];
+  if(quizDir === 'jp'){
+    const en = item._en || item.opts[item.ans];
+    speakWord(en); // English answer
+  }
+  // en mode: back is Japanese, no pronunciation
+}
+
 
 /* ══════════════════════════════
    FLASHCARD MODE
@@ -1738,26 +1757,23 @@ function renderFlashCard(){
 
   const frontWord = document.getElementById('flashFrontWord');
   const backWord = document.getElementById('flashBackWord');
-  const speakBtn = document.getElementById('flashSpeakBtn');
-  const speakBtnBack = document.getElementById('flashSpeakBtnBack');
+
 
   if(quizDir === 'en'){
     frontWord.textContent = item.q;
     frontWord.classList.remove('jp');
+    frontWord.style.cursor = 'pointer';
     backWord.textContent = item.opts[item.ans];
     backWord.classList.add('jp');
-    speakBtn.style.display = 'flex';
-    speakBtnBack.style.display = 'none';
-    speakBtn.onclick = (e)=>{e.stopPropagation(); speakWord(item.q);};
+    backWord.style.cursor = 'default';
   } else {
     frontWord.textContent = item.q; // JP meaning
     frontWord.classList.add('jp');
+    frontWord.style.cursor = 'default';
     const en = item._en || item.opts[item.ans];
     backWord.textContent = en;
     backWord.classList.remove('jp');
-    speakBtn.style.display = 'none';
-    speakBtnBack.style.display = 'flex';
-    speakBtnBack.onclick = (e)=>{e.stopPropagation(); speakWord(en);};
+    backWord.style.cursor = 'pointer';
   }
 
   document.getElementById('flashCount').textContent = (flashIdx+1)+' / '+flashPool.length;
@@ -1811,12 +1827,11 @@ function closeFlash(){
 function speakTimerWord(){
   if(!tProbs || tProbs.length === 0) return;
   const q = tProbs[tIdx];
-  // In en→jp mode, speak the English question word
-  // In jp→en mode, speak the correct English answer after answering
   if(quizDir === 'en'){
+    // English word is the question — speak it
     speakWord(q.q);
   } else {
-    // q.q is Japanese, speak the correct English answer
+    // Question is Japanese — speak the correct English answer
     const en = q._en || q.opts[q.ans];
     speakWord(en);
   }
