@@ -253,6 +253,38 @@ input,select{font-size:16px;}
 .flash-next{background:rgba(57,255,20,0.08);border-color:rgba(57,255,20,0.35);color:var(--ng);}
 .flash-close{background:rgba(255,45,120,0.08);border-color:rgba(255,45,120,0.35);color:var(--np);}
 .flash-shuffle{background:rgba(191,0,255,0.08);border-color:rgba(191,0,255,0.35);color:var(--nu);}
+
+/* ═══ RANGE INPUT OVERLAY ═══ */
+#rangeOv{position:fixed;inset:0;background:rgba(5,5,16,0.95);z-index:450;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px);}
+#rangeOv.hidden{display:none!important;}
+.range-card{background:var(--b2);border:1px solid var(--bg);border-radius:20px;box-shadow:0 0 60px rgba(0,245,255,0.1),inset 0 1px 0 rgba(255,255,255,0.04);padding:24px;width:100%;max-width:440px;animation:rangeIn 0.3s ease;}
+@keyframes rangeIn{from{opacity:0;transform:scale(0.92) translateY(16px);}to{opacity:1;transform:scale(1) translateY(0);}}
+.range-title{font-family:'Orbitron',monospace;font-weight:900;font-size:clamp(1rem,3.5vw,1.4rem);color:var(--nc);text-shadow:0 0 20px var(--nc);text-align:center;margin-bottom:4px;}
+.range-sub{font-size:0.68rem;color:var(--td);text-align:center;margin-bottom:16px;line-height:1.5;}
+.range-input-wrap{position:relative;margin-bottom:12px;}
+.range-input{width:100%;background:var(--b1);border:2px solid rgba(0,245,255,0.25);border-radius:12px;color:var(--tm);padding:14px 16px;font-family:'Orbitron',monospace;font-size:1rem;letter-spacing:0.05em;text-align:center;transition:border-color 0.2s;}
+.range-input:focus{outline:none;border-color:var(--nc);box-shadow:0 0 20px rgba(0,245,255,0.15);}
+.range-input::placeholder{color:var(--td);font-size:0.75rem;letter-spacing:0.02em;}
+.range-presets{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:14px;}
+.range-preset{background:var(--b1);border:1px solid rgba(0,245,255,0.12);border-radius:8px;color:var(--td);padding:8px 4px;font-size:0.65rem;font-family:'Noto Sans JP',sans-serif;font-weight:700;cursor:pointer;transition:all 0.18s;text-align:center;line-height:1.3;}
+@media(hover:hover){.range-preset:hover{border-color:rgba(0,245,255,0.4);color:var(--tm);background:rgba(0,245,255,0.04);}}
+.range-preset.sel{border-color:var(--nc);color:var(--nc);background:rgba(0,245,255,0.08);box-shadow:0 0 8px rgba(0,245,255,0.12);}
+.range-preview{background:var(--b1);border:1px solid rgba(57,255,20,0.15);border-radius:10px;padding:10px 14px;margin-bottom:14px;min-height:40px;transition:all 0.2s;}
+.range-preview-lbl{font-family:'Orbitron',monospace;font-size:0.55rem;letter-spacing:0.15em;color:var(--ng);text-shadow:0 0 6px var(--ng);margin-bottom:4px;}
+.range-preview-val{font-size:0.82rem;color:var(--tm);font-weight:700;}
+.range-preview-val .rng-tag{display:inline-block;background:rgba(0,245,255,0.08);border:1px solid rgba(0,245,255,0.2);border-radius:6px;padding:2px 8px;margin:2px 3px;font-size:0.72rem;color:var(--nc);font-family:'Orbitron',monospace;}
+.range-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.range-go{background:rgba(57,255,20,0.08);border:1px solid rgba(57,255,20,0.35);border-radius:12px;color:var(--ng);padding:14px;font-family:'Noto Sans JP',sans-serif;font-size:0.85rem;font-weight:700;cursor:pointer;transition:all 0.2s;text-shadow:0 0 8px var(--ng);}
+@media(hover:hover){.range-go:hover{background:rgba(57,255,20,0.14);box-shadow:0 0 16px rgba(57,255,20,0.2);}}
+.range-go:disabled{opacity:0.3;cursor:not-allowed;}
+.range-cancel{background:var(--b1);border:1px solid rgba(255,45,120,0.25);border-radius:12px;color:var(--np);padding:14px;font-family:'Noto Sans JP',sans-serif;font-size:0.85rem;font-weight:700;cursor:pointer;transition:all 0.2s;}
+.range-add{background:rgba(191,0,255,0.08);border:1px solid rgba(191,0,255,0.3);border-radius:10px;color:var(--nu);padding:10px;font-family:'Noto Sans JP',sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer;transition:all 0.2s;width:100%;margin-bottom:10px;text-shadow:0 0 6px var(--nu);}
+@media(hover:hover){.range-add:hover{background:rgba(191,0,255,0.14);box-shadow:0 0 12px rgba(191,0,255,0.2);}}
+.range-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;min-height:28px;}
+.range-tag{display:inline-flex;align-items:center;gap:4px;background:rgba(0,245,255,0.06);border:1px solid rgba(0,245,255,0.25);border-radius:8px;padding:5px 10px;font-family:'Orbitron',monospace;font-size:0.7rem;color:var(--nc);animation:tagIn 0.2s ease;}
+@keyframes tagIn{from{opacity:0;transform:scale(0.8);}to{opacity:1;transform:scale(1);}}
+.range-tag-x{cursor:pointer;color:var(--np);font-size:0.8rem;margin-left:2px;opacity:0.7;transition:opacity 0.15s;}
+.range-tag-x:hover{opacity:1;}
 </style>
 </head>
 <body>
@@ -446,6 +478,44 @@ input,select{font-size:16px;}
   </div>
 </div>
 
+
+
+<!-- ═══ RANGE INPUT OVERLAY ═══ -->
+<div id="rangeOv" class="hidden">
+  <div class="range-card">
+    <div class="range-title">🎯 RANGE SELECT</div>
+    <div class="range-sub">出題範囲を番号で指定<br>複数の範囲を追加できます</div>
+    
+    <div class="range-presets" id="rangePresets">
+      <button class="range-preset" onclick="rangePreset(1,100)">1-100</button>
+      <button class="range-preset" onclick="rangePreset(101,200)">101-200</button>
+      <button class="range-preset" onclick="rangePreset(201,300)">201-300</button>
+      <button class="range-preset" onclick="rangePreset(301,500)">301-500</button>
+      <button class="range-preset" onclick="rangePreset(501,800)">501-800</button>
+      <button class="range-preset" onclick="rangePreset(801,1100)">801-1100</button>
+      <button class="range-preset" onclick="rangePreset(1101,1400)">1101-1400</button>
+      <button class="range-preset" onclick="rangePreset(1401,1700)">1401-1700</button>
+      <button class="range-preset" onclick="rangePreset(1701,1900)">1701-1900</button>
+    </div>
+    
+    <div class="range-input-wrap">
+      <input type="text" class="range-input" id="rangeInput" placeholder="例: 150-230" inputmode="text" autocomplete="off">
+    </div>
+    <button class="range-add" onclick="addRange()">＋ この範囲を追加</button>
+    
+    <div class="range-tags" id="rangeTags"></div>
+    
+    <div class="range-preview" id="rangePreview">
+      <div class="range-preview-lbl">SELECTED</div>
+      <div class="range-preview-val" id="rangePreviewVal" style="color:var(--td);font-size:0.75rem;">範囲を追加してください</div>
+    </div>
+    
+    <div class="range-btns">
+      <button class="range-cancel" onclick="closeRange()">✕ キャンセル</button>
+      <button class="range-go" id="rangeGoBtn" disabled onclick="confirmRange()">▶ 決定</button>
+    </div>
+  </div>
+</div>
 
 <!-- ═══ FLASHCARD OVERLAY ═══ -->
 <div id="flashOv" class="hidden">
@@ -770,7 +840,11 @@ function decideAndStart(){
     return;
   }
   pool=[];
-  selIds.forEach(id=>{ if(typeof problemDatabase!=='undefined'&&problemDatabase[id]) pool=pool.concat(problemDatabase[id]); });
+  if(window._useCustomRange && customRanges.length > 0){
+    pool = getFilteredPool();
+  } else {
+    selIds.forEach(id=>{ if(typeof problemDatabase!=='undefined'&&problemDatabase[id]) pool=pool.concat(problemDatabase[id]); });
+  }
   if(pool.length===0){ toast('⚠ 問題データが見つかりません'); return; }
   
   // Apply direction
@@ -778,6 +852,7 @@ function decideAndStart(){
     pool = buildReversePool(pool);
   }
   
+  window._useCustomRange = false;
   document.getElementById('floatBack').classList.remove('hidden');
   resetGame();
   startTimer();
@@ -1405,30 +1480,174 @@ function openAllT1900(){
   show('catScreen');
 }
 
+/* ══════════════════════════════
+   RANGE SELECT SYSTEM
+══════════════════════════════ */
+let customRanges = []; // [{from:150, to:230}, ...]
+
 function openRangeT1900(){
   clk();
-  const input = prompt('範囲を入力 (例: 1-500, 201-400)');
-  if(!input) return;
-  const m = input.match(/(\d+)\s*[-~～]\s*(\d+)/);
-  if(!m){ toast('⚠ 形式が正しくありません (例: 1-500)'); return; }
-  const from=parseInt(m[1]), to=parseInt(m[2]);
-  if(from<1||to>1900||from>to){ toast('⚠ 1~1900の範囲で指定してください'); return; }
+  customRanges = [];
+  document.getElementById('rangeInput').value = '';
+  updateRangeUI();
+  // Clear preset highlights
+  document.querySelectorAll('.range-preset').forEach(b=>b.classList.remove('sel'));
+  document.getElementById('rangeOv').classList.remove('hidden');
+  setTimeout(()=>document.getElementById('rangeInput').focus(), 300);
+}
+
+function closeRange(){
+  clk();
+  document.getElementById('rangeOv').classList.add('hidden');
+}
+
+function rangePreset(from, to){
+  clk();
+  // Toggle: if already exists, remove it
+  const idx = customRanges.findIndex(r=>r.from===from && r.to===to);
+  if(idx >= 0){
+    customRanges.splice(idx, 1);
+  } else {
+    customRanges.push({from, to});
+  }
+  updateRangeUI();
+}
+
+function addRange(){
+  const input = document.getElementById('rangeInput').value.trim();
+  if(!input){ toast('⚠ 範囲を入力してください'); return; }
+  
+  // Support multiple ranges separated by comma/space
+  const parts = input.split(/[,、\s]+/);
+  let added = 0;
+  for(const part of parts){
+    const m = part.match(/(\d+)\s*[-~～〜]\s*(\d+)/);
+    if(!m) continue;
+    const from = parseInt(m[1]), to = parseInt(m[2]);
+    if(from < 1 || to > 1900 || from > to) continue;
+    // Check for duplicate
+    if(!customRanges.some(r=>r.from===from && r.to===to)){
+      customRanges.push({from, to});
+      added++;
+    }
+  }
+  if(added === 0){
+    toast('⚠ 正しい形式で入力してください (例: 150-230)');
+    return;
+  }
+  suc(); // success sound
+  document.getElementById('rangeInput').value = '';
+  updateRangeUI();
+}
+
+function removeRange(idx){
+  clk();
+  customRanges.splice(idx, 1);
+  updateRangeUI();
+}
+
+function updateRangeUI(){
+  // Tags
+  const tagsEl = document.getElementById('rangeTags');
+  tagsEl.innerHTML = customRanges.map((r,i)=>
+    `<span class="range-tag">${r.from}-${r.to}<span class="range-tag-x" onclick="removeRange(${i})">✕</span></span>`
+  ).join('');
+  
+  // Preview: count total words
+  const totalWords = countRangeWords();
+  const previewVal = document.getElementById('rangePreviewVal');
+  if(customRanges.length === 0){
+    previewVal.innerHTML = '<span style="color:var(--td);font-size:0.75rem;">範囲を追加してください</span>';
+  } else {
+    const tags = customRanges.map(r=>`<span class="rng-tag">${r.from}-${r.to}</span>`).join('');
+    previewVal.innerHTML = tags + `<span style="display:block;margin-top:6px;font-family:Orbitron,monospace;font-size:0.9rem;color:var(--ng);text-shadow:0 0 8px var(--ng);">${totalWords} 問</span>`;
+  }
+  
+  // Preset highlights
+  document.querySelectorAll('.range-preset').forEach(btn=>{
+    const m = btn.textContent.match(/(\d+)-(\d+)/);
+    if(m){
+      const pf = parseInt(m[1]), pt = parseInt(m[2]);
+      btn.classList.toggle('sel', customRanges.some(r=>r.from===pf && r.to===pt));
+    }
+  });
+  
+  // Go button
+  document.getElementById('rangeGoBtn').disabled = customRanges.length === 0;
+}
+
+function countRangeWords(){
+  const included = new Set();
+  customRanges.forEach(r=>{
+    for(let i=r.from; i<=r.to; i++) included.add(i);
+  });
+  return included.size;
+}
+
+function getFilteredPool(){
+  // Build set of included word numbers
+  const included = new Set();
+  customRanges.forEach(r=>{
+    for(let i=r.from; i<=r.to; i++) included.add(i);
+  });
+  
+  // Collect problems with their global word number
+  const result = [];
+  for(let sec=1; sec<=19; sec++){
+    const key = 't1900_'+sec;
+    if(!problemDatabase[key]) continue;
+    problemDatabase[key].forEach((p, idx)=>{
+      const wordNum = (sec-1)*100 + idx + 1;
+      if(included.has(wordNum)){
+        result.push({...p, _wordNum: wordNum});
+      }
+    });
+  }
+  return result;
+}
+
+function confirmRange(){
+  suc();
+  document.getElementById('rangeOv').classList.add('hidden');
+  
+  // Build the exact pool filtered by word numbers
+  const filtered = getFilteredPool();
+  if(filtered.length === 0){ toast('⚠ 問題データが見つかりません'); return; }
+  
+  // Set up sections that cover the range (for catScreen display)
   catMode='all-preset';
   selIds.clear();
-  for(let sec=1;sec<=19;sec++){
-    const secStart=(sec-1)*100+1, secEnd=sec*100;
-    if(secEnd>=from && secStart<=to) selIds.add('t1900_'+sec);
-  }
+  customRanges.forEach(r=>{
+    for(let sec=1;sec<=19;sec++){
+      const secStart=(sec-1)*100+1, secEnd=sec*100;
+      if(secEnd>=r.from && secStart<=r.to) selIds.add('t1900_'+sec);
+    }
+  });
+  
+  // Store custom ranges for pool filtering
+  window._useCustomRange = true;
+  
   activeCatKey='t1900';
   resetCatScreenState();
-  document.getElementById('catLogo').textContent='🎯 '+from+'-'+to;
-  document.getElementById('catLogoSub').textContent='CUSTOM RANGE';
-  document.getElementById('catPtitle').textContent='▶ 該当セクション選択済み';
+  const label = customRanges.length === 1 
+    ? '🎯 ' + customRanges[0].from + '-' + customRanges[0].to
+    : '🎯 ' + customRanges.length + '範囲';
+  document.getElementById('catLogo').textContent = label;
+  document.getElementById('catLogoSub').textContent = countRangeWords() + ' WORDS';
+  document.getElementById('catPtitle').textContent = '▶ 範囲選択済み （' + countRangeWords() + '問）';
   document.getElementById('tabBar').classList.add('hidden');
   renderGrid('t1900');
-  document.getElementById('catBack').onclick=()=>{clk();show('mainScreen');};
+  document.getElementById('catBack').onclick=()=>{clk();window._useCustomRange=false;show('mainScreen');};
   show('catScreen');
 }
+
+// Enter key support for range input
+document.addEventListener('DOMContentLoaded', ()=>{
+  const ri = document.getElementById('rangeInput');
+  if(ri) ri.addEventListener('keydown', e=>{
+    if(e.key==='Enter'){e.preventDefault(); addRange();}
+  });
+});
 
 
 
@@ -1492,8 +1711,13 @@ let flashPool = [], flashIdx = 0, flashFlipped = false;
 
 function startFlashcard(){
   pool=[];
-  selIds.forEach(id=>{ if(typeof problemDatabase!=='undefined'&&problemDatabase[id]) pool=pool.concat(problemDatabase[id]); });
+  if(window._useCustomRange && customRanges.length > 0){
+    pool = getFilteredPool();
+  } else {
+    selIds.forEach(id=>{ if(typeof problemDatabase!=='undefined'&&problemDatabase[id]) pool=pool.concat(problemDatabase[id]); });
+  }
   if(pool.length===0){ toast('⚠ 問題データが見つかりません'); return; }
+  window._useCustomRange = false;
 
   if(quizDir==='jp'){
     flashPool = buildReversePool(pool);
